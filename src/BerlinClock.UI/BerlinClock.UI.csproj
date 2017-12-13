@@ -43,11 +43,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClockDisplay.cs" />
+    <Compile Include="DisplayColors.cs" />
+    <Compile Include="IClockDisplay.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BerlinClock.Domain\BerlinClock.Domain.csproj">
+      <Project>{1A31C1B5-7B37-4001-AF58-CDB601D2975C}</Project>
+      <Name>BerlinClock.Domain</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
