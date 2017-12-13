@@ -2,7 +2,8 @@
 
 namespace BerlinClock.Domain
 {
-    public sealed class Clock
+    internal sealed class Clock
+        : IClock
     {
         private readonly int _hoursFirstRowInterval;
         private readonly int _minutesFirstRowInterval;

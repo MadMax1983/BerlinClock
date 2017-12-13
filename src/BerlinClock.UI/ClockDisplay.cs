@@ -11,9 +11,9 @@ namespace BerlinClock.UI
     {
         private readonly StringBuilder _stringBuilder = new StringBuilder();
 
-        private readonly Clock _clock;
+        private readonly IClock _clock;
 
-        public ClockDisplay(Clock clock)
+        public ClockDisplay(IClock clock)
         {
             _clock = clock;
         }
@@ -45,7 +45,9 @@ namespace BerlinClock.UI
 
             for (var i = 0; i < lampsArray.Length; i++)
             {
-                var onColor = showReds && i > 0 && (i + 1) % 3 == 0
+                var onColor = showReds &&
+                              i > 0 &&
+                              (i + 1) % 3 == 0
                     ? DisplayColors.R
                     : DisplayColors.Y;
 

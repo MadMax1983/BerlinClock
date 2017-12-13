@@ -34,9 +34,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Clock.cs" />
+    <Compile Include="ClockResolver.cs" />
     <Compile Include="ClockRow.cs" />
     <Compile Include="HoursFirstRow.cs" />
     <Compile Include="HoursSecondRow.cs" />
+    <Compile Include="IClock.cs" />
     <Compile Include="IClockRow.cs" />
     <Compile Include="MinutesFirstRow.cs" />
     <Compile Include="MinutesSecondRow.cs" />
