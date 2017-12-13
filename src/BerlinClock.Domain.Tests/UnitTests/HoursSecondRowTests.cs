@@ -9,10 +9,10 @@ namespace BerlinClock.Domain.Tests.UnitTests
     {
         private const int FIRST_ROW_TIME_UNIT_INTERVAL = 5;
 
+        [TestCase(0)]
         [TestCase(1)]
         [TestCase(2)]
         [TestCase(3)]
-        [TestCase(4)]
         public void Given_Hour_When_SwitchingHourLampsState_Then_TurnsAppropriateLampsOn(int hour)
         {
             var hoursSecondRow = HoursSecondRow.Create(FIRST_ROW_TIME_UNIT_INTERVAL);
@@ -36,7 +36,7 @@ namespace BerlinClock.Domain.Tests.UnitTests
             }
         }
 
-        [TestCase(0)]
+        [TestCase(-1)]
         [TestCase(5)]
         public void Given_InvalidHour_When_SwitchingHourLampsState_Then_ThrowsArgumentOutOfRangeException(int hour)
         {

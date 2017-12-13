@@ -22,9 +22,9 @@ namespace BerlinClock.Domain
                 throw new ArgumentOutOfRangeException(nameof(minute));
             }
 
-            var hoursToSet = minute - (minute % TimeUnitInterval);
+            var minutesToSet = minute - (minute % TimeUnitInterval);
 
-            base.SetPartOfTime(hoursToSet);
+            base.SetPartOfTime(minutesToSet);
         }
     }
 }

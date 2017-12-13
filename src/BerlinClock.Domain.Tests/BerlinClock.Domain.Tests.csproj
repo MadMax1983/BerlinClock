@@ -53,6 +53,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="IntegrationTests\ClockTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnitTests\HoursFirstRowTests.cs" />
     <Compile Include="UnitTests\HoursSecondRowTests.cs" />
@@ -63,9 +64,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="IntegrationTests\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\BerlinClock.Domain\BerlinClock.Domain.csproj">
       <Project>{1A31C1B5-7B37-4001-AF58-CDB601D2975C}</Project>

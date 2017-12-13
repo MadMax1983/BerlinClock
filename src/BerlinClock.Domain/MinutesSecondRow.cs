@@ -20,7 +20,7 @@ namespace BerlinClock.Domain
 
         public override void SetPartOfTime(int minute)
         {
-            if (minute < 1 || minute > 4)
+            if (minute < 0 || minute > 4)
             {
                 throw new ArgumentOutOfRangeException(nameof(minute));
             }
