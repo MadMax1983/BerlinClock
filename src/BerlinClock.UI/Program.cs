@@ -8,7 +8,7 @@ namespace BerlinClock.UI
     {
         private static void Main(string[] args)
         {
-            var dateTime = DateTime.ParseExact("14:56:39", "HH:mm:ss", CultureInfo.InvariantCulture);
+            var dateTime = DateTime.ParseExact(args[0], "HH:mm:ss", CultureInfo.InvariantCulture);
 
             var clock = ClockResolver.Resolve();
 
