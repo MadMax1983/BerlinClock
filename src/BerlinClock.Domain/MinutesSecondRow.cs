@@ -1,23 +1,33 @@
-﻿namespace BerlinClock.Domain
+﻿using System;
+
+namespace BerlinClock.Domain
 {
     internal sealed class MinutesSecondRow
         : ClockRow
     {
-        private MinutesSecondRow()
+        private readonly int _rowOneInterval;
+
+        private MinutesSecondRow(int rowOneInterval)
             : base(4, 1)
         {
+            _rowOneInterval = rowOneInterval;
         }
 
-        public override void SetPartOfTime(int minutes)
+        public static MinutesSecondRow Create(int rowOneInterval)
         {
-            var noOfLampsToTurnOn = minutes % TimeUnitInterval;
-
-            SwitchLampsState(noOfLampsToTurnOn);
+            return new MinutesSecondRow(rowOneInterval);
         }
 
-        public static MinutesSecondRow Create()
+        public override void SetPartOfTime(int minute)
         {
-            return new MinutesSecondRow();
+            if (minute < 1 || minute > 4)
+            {
+                throw new ArgumentOutOfRangeException(nameof(minute));
+            }
+
+            var hoursToSet = minute % _rowOneInterval;
+
+            base.SetPartOfTime(hoursToSet);
         }
     }
 }

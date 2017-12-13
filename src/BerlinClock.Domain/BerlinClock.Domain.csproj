@@ -36,7 +36,6 @@
     <Compile Include="Clock.cs" />
     <Compile Include="ClockRow.cs" />
     <Compile Include="HoursFirstRow.cs" />
-    <Compile Include="HoursRow.cs" />
     <Compile Include="HoursSecondRow.cs" />
     <Compile Include="IClockRow.cs" />
     <Compile Include="MinutesFirstRow.cs" />

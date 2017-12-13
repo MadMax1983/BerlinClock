@@ -4,16 +4,29 @@ namespace BerlinClock.Domain
 {
     public sealed class Clock
     {
-        private readonly HoursFirstRow _hoursFirstRow = Domain.HoursFirstRow.Create();
-        private readonly HoursSecondRow _hoursSecondRow = Domain.HoursSecondRow.Create();
+        private readonly int _hoursFirstRowInterval;
+        private readonly int _minutesFirstRowInterval;
 
-        private readonly MinutesFirstRow _minutesFirstRow = Domain.MinutesFirstRow.Create();
-        private readonly MinutesSecondRow _minutesSecondRow = Domain.MinutesSecondRow.Create();
+        private readonly HoursFirstRow _hoursFirstRow;
+        private readonly HoursSecondRow _hoursSecondRow;
 
-        private readonly SecondsRow _secondsRow = Domain.SecondsRow.Create();
+        private readonly MinutesFirstRow _minutesFirstRow;
+        private readonly MinutesSecondRow _minutesSecondRow;
 
-        private Clock()
+        private readonly SecondsRow _secondsRow;
+
+        private Clock(int hoursFirstRowInterval, int minutesFirstRowInterval)
         {
+            _hoursFirstRowInterval = hoursFirstRowInterval;
+            _minutesFirstRowInterval = minutesFirstRowInterval;
+
+            _hoursFirstRow = Domain.HoursFirstRow.Create();
+            _hoursSecondRow = Domain.HoursSecondRow.Create(hoursFirstRowInterval);
+
+            _minutesFirstRow = Domain.MinutesFirstRow.Create();
+            _minutesSecondRow = Domain.MinutesSecondRow.Create(minutesFirstRowInterval);
+
+            _secondsRow = Domain.SecondsRow.Create();
         }
 
         public IClockRow HoursFirstRow => _hoursFirstRow;
@@ -26,15 +39,30 @@ namespace BerlinClock.Domain
 
         public IClockRow SecondsRow => _secondsRow;
 
+        public static Clock Create(int hoursFirstRowInterval, int minutesFirstRowInterval)
+        {
+            return new Clock(hoursFirstRowInterval, minutesFirstRowInterval);
+        }
+
         public void GenerateClockState(DateTime dateTime)
         {
-            _hoursFirstRow.SetPartOfTime(dateTime.Hour);
-            _hoursSecondRow.SetPartOfTime(dateTime.Hour);
+            var hour = dateTime.Hour;
+            var minute = dateTime.Minute;
+            var second = dateTime.Second;
 
-            _minutesFirstRow.SetPartOfTime(dateTime.Minute);
-            _minutesSecondRow.SetPartOfTime(dateTime.Minute);
+            var lampsForHoursFirstRow = hour - (hour % _hoursFirstRowInterval);
+            var lampsForHoursSecondRow = hour - lampsForHoursFirstRow;
 
-            _secondsRow.SetPartOfTime(dateTime.Second);
+            var lampsForMinutesFirstRow = minute - (minute % _minutesFirstRowInterval);
+            var lampsForMinutesSecondRow = minute - lampsForMinutesFirstRow;
+
+            _hoursFirstRow.SetPartOfTime(lampsForHoursFirstRow);
+            _hoursSecondRow.SetPartOfTime(lampsForHoursSecondRow);
+
+            _minutesFirstRow.SetPartOfTime(lampsForMinutesFirstRow);
+            _minutesSecondRow.SetPartOfTime(lampsForMinutesSecondRow);
+
+            _secondsRow.SetPartOfTime(second);
         }
 
         public void Clear()
@@ -46,11 +74,6 @@ namespace BerlinClock.Domain
             _minutesSecondRow.Clear();
 
             _secondsRow.Clear();
-        }
-
-        public static Clock Create()
-        {
-            return new Clock();
         }
     }
 }

@@ -18,6 +18,14 @@ namespace BerlinClock.Domain
 
         protected int TimeUnitInterval { get; }
 
+        public virtual void SetPartOfTime(int partOfTime)
+        {
+            for (var i = LampsInternal.Length - 1; i >= 0; i--)
+            {
+                LampsInternal[i] = SetLampState(partOfTime, (i + 1) * TimeUnitInterval);
+            }
+        }
+
         internal void Clear()
         {
             for (var i = 0; i < LampsInternal.Length; i++)
@@ -26,14 +34,9 @@ namespace BerlinClock.Domain
             }
         }
 
-        public abstract void SetPartOfTime(int hours);
-
-        protected virtual void SwitchLampsState(int noOfLightedOnLamps)
+        private static bool SetLampState(int timeUnit, int unitToCompare)
         {
-            for (var i = 0; i < noOfLightedOnLamps; i++)
-            {
-                LampsInternal[i] = true;
-            }
+            return timeUnit >= unitToCompare;
         }
     }
 }

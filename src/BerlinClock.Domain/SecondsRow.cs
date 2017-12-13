@@ -1,4 +1,6 @@
-﻿namespace BerlinClock.Domain
+﻿using System;
+
+namespace BerlinClock.Domain
 {
     internal sealed class SecondsRow
         : ClockRow
@@ -8,16 +10,19 @@
         {
         }
 
-        public override void SetPartOfTime(int seconds)
-        {
-            var noOfLampsToTurnOn = seconds % TimeUnitInterval;
-
-            SwitchLampsState(noOfLampsToTurnOn);
-        }
-
         public static SecondsRow Create()
         {
             return new SecondsRow();
+        }
+
+        public override void SetPartOfTime(int minute)
+        {
+            if (minute < 0 || minute > 59)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+
+            LampsInternal[0] = minute % TimeUnitInterval == 0;
         }
     }
 }

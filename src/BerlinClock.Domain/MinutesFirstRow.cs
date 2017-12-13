@@ -1,4 +1,6 @@
-﻿namespace BerlinClock.Domain
+﻿using System;
+
+namespace BerlinClock.Domain
 {
     internal sealed class MinutesFirstRow
         : ClockRow
@@ -8,17 +10,21 @@
         {
         }
 
-        // TODO: Gen number of lamps to turn on.
-        public override void SetPartOfTime(int minutes)
-        {
-            var noOfLampsToTurnOn = (minutes - (minutes % TimeUnitInterval)) / TimeUnitInterval;
-
-            SwitchLampsState(noOfLampsToTurnOn);
-        }
-
         public static MinutesFirstRow Create()
         {
             return new MinutesFirstRow();
+        }
+
+        public override void SetPartOfTime(int minute)
+        {
+            if (minute < 0 || minute > 55)
+            {
+                throw new ArgumentOutOfRangeException(nameof(minute));
+            }
+
+            var hoursToSet = minute - (minute % TimeUnitInterval);
+
+            base.SetPartOfTime(hoursToSet);
         }
     }
 }
